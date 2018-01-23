@@ -11,7 +11,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/bhupendra-bhudia/procedural-art.git"
+        "url": "git+https://github.com/bhudiaxyz/procedural-art.git"
     },
     "keywords": [
         "procedural",
@@ -24,9 +24,9 @@
     "author": "Bhupendra Bhudia",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/bhupendra-bhudia/procedural-art/issues"
+        "url": "https://github.com/bhudiaxyz/procedural-art/issues"
     },
-    "homepage": "https://github.com/bhupendra-bhudia/procedural-art",
+    "homepage": "https://github.com/bhudiaxyz/procedural-art",
     "dependencies": {
         "alea": "0.0.9",
         "babel-plugin-transform-async-to-generator": "^6.22.0",

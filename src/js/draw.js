@@ -1,7 +1,7 @@
 /*!
- * Procedural Art - Procedurally generated art (procedural-art v1.0.0 - https://github.com/bhupendra-bhudia/procedural-art)
+ * Procedural Art - Procedurally generated art (procedural-art v1.0.0 - https://github.com/bhudiaxyz/procedural-art)
  *
- * Licensed under MIT (https://github.com/bhupendra-bhudia/procedural-art/blob/master/LICENSE)
+ * Licensed under MIT (https://github.com/bhudiaxyz/procedural-art/blob/master/LICENSE)
  *
  * Based on works of: https://github.com/alan-luo/planetprocedural and https://github.com/marian42/proceduralart
  */

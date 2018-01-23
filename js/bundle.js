@@ -1,7 +1,7 @@
 /*!
- * Procedural Art - Procedurally generated art (procedural-art v1.0.0 - https://github.com/bhupendra-bhudia/procedural-art)
+ * Procedural Art - Procedurally generated art (procedural-art v1.0.0 - https://github.com/bhudiaxyz/procedural-art)
  *
- * Licensed under MIT (https://github.com/bhupendra-bhudia/procedural-art/blob/master/LICENSE)
+ * Licensed under MIT (https://github.com/bhudiaxyz/procedural-art/blob/master/LICENSE)
  *
  * Based on works of: https://github.com/alan-luo/planetprocedural and https://github.com/marian42/proceduralart
  */
@@ -71,7 +71,7 @@
         return random() * 0x100000000; // 2^32
       };
       random.fract53 = function() {
-        return random() + 
+        return random() +
           (random() * 0x200000 | 0) * 1.1102230246251565e-16; // 2^-53
       };
       random.version = 'Alea 0.9';
@@ -87,7 +87,7 @@
         s2 = +i[2] || 0;
         c = +i[3] || 0;
       };
- 
+
       return random;
 
     } (Array.prototype.slice.call(arguments)));
@@ -536,9 +536,9 @@ if (typeof module !== 'undefined') {
 
 },{}],3:[function(require,module,exports){
 /*!
- * Procedural Art - Procedurally generated art (procedural-art v1.0.0 - https://github.com/bhupendra-bhudia/procedural-art)
+ * Procedural Art - Procedurally generated art (procedural-art v1.0.0 - https://github.com/bhudiaxyz/procedural-art)
  *
- * Licensed under MIT (https://github.com/bhupendra-bhudia/procedural-art/blob/master/LICENSE)
+ * Licensed under MIT (https://github.com/bhudiaxyz/procedural-art/blob/master/LICENSE)
  *
  * Based on works of: https://github.com/alan-luo/planetprocedural and https://github.com/marian42/proceduralart
  */
@@ -621,9 +621,9 @@ var Color = {};
 
 },{}],4:[function(require,module,exports){
 /*!
- * Procedural Art - Procedurally generated art (procedural-art v1.0.0 - https://github.com/bhupendra-bhudia/procedural-art)
+ * Procedural Art - Procedurally generated art (procedural-art v1.0.0 - https://github.com/bhudiaxyz/procedural-art)
  *
- * Licensed under MIT (https://github.com/bhupendra-bhudia/procedural-art/blob/master/LICENSE)
+ * Licensed under MIT (https://github.com/bhudiaxyz/procedural-art/blob/master/LICENSE)
  *
  * Based on works of: https://github.com/alan-luo/planetprocedural and https://github.com/marian42/proceduralart
  */
@@ -861,9 +861,9 @@ var Delaunay = {};
 
 },{}],5:[function(require,module,exports){
 /*!
- * Procedural Art - Procedurally generated art (procedural-art v1.0.0 - https://github.com/bhupendra-bhudia/procedural-art)
+ * Procedural Art - Procedurally generated art (procedural-art v1.0.0 - https://github.com/bhudiaxyz/procedural-art)
  *
- * Licensed under MIT (https://github.com/bhupendra-bhudia/procedural-art/blob/master/LICENSE)
+ * Licensed under MIT (https://github.com/bhudiaxyz/procedural-art/blob/master/LICENSE)
  *
  * Based on works of: https://github.com/alan-luo/planetprocedural and https://github.com/marian42/proceduralart
  */
@@ -924,9 +924,9 @@ var Draw = {};
 
 },{}],6:[function(require,module,exports){
 /*!
- * Procedural Art - Procedurally generated art (procedural-art v1.0.0 - https://github.com/bhupendra-bhudia/procedural-art)
+ * Procedural Art - Procedurally generated art (procedural-art v1.0.0 - https://github.com/bhudiaxyz/procedural-art)
  *
- * Licensed under MIT (https://github.com/bhupendra-bhudia/procedural-art/blob/master/LICENSE)
+ * Licensed under MIT (https://github.com/bhudiaxyz/procedural-art/blob/master/LICENSE)
  *
  * Based on works of: https://github.com/alan-luo/planetprocedural and https://github.com/marian42/proceduralart
  */
@@ -1557,9 +1557,9 @@ makeTrees();
 
 },{"./color.js":3,"./delaunay.js":4,"./draw.js":5,"./util.js":7,"alea":1,"simplex-noise":2}],7:[function(require,module,exports){
 /*!
- * Procedural Art - Procedurally generated art (procedural-art v1.0.0 - https://github.com/bhupendra-bhudia/procedural-art)
+ * Procedural Art - Procedurally generated art (procedural-art v1.0.0 - https://github.com/bhudiaxyz/procedural-art)
  *
- * Licensed under MIT (https://github.com/bhupendra-bhudia/procedural-art/blob/master/LICENSE)
+ * Licensed under MIT (https://github.com/bhudiaxyz/procedural-art/blob/master/LICENSE)
  *
  * Based on works of: https://github.com/alan-luo/planetprocedural and https://github.com/marian42/proceduralart
  */
