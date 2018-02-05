@@ -197,4 +197,8 @@ gulp.task('copy', function () {
 });
 
 // DEFAULT TASK:
+gulp.task('build', ['copy', 'bundle:css', 'bundle:js']);
+
+// DEFAULT TASK:
 gulp.task('default', ['copy', 'bundle:css', 'bundle:js', 'watch']);
+

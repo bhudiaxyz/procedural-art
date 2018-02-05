@@ -5,6 +5,7 @@
   "description": "Procedurally generated art",
   "main": "src/index.js",
   "scripts": {
+    "build": "gulp build",
     "start": "gulp",
     "test": "gulp test",
     "lint": "gulp lint:js"
