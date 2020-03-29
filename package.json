@@ -39,6 +39,8 @@
     "worley-noise": "^2.0.1"
   },
   "devDependencies": {
+    "diff": ">=3.5.0",
+    "lodash.template": ">=4.5.0",
     "browserify": "^15.2.0",
     "chai": "^4.1.2",
     "del": "^5.1.0",
