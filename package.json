@@ -1,8 +1,18 @@
 {
-  "title": "Procedural Art",
   "name": "procedural-art",
   "version": "1.0.0",
+  "title": "Procedural Art",
   "description": "Procedurally generated art",
+  "author": "Bhupendra Bhudia",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bhudiaxyz/procedural-art/issues"
+  },
+  "homepage": "https://github.com/bhudiaxyz/procedural-art",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bhudiaxyz/procedural-art.git"
+  },
   "main": "src/index.js",
   "scripts": {
     "build": "gulp build",
@@ -10,47 +20,31 @@
     "test": "gulp test",
     "lint": "gulp lint:js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/bhudiaxyz/procedural-art.git"
-  },
-  "keywords": [
-    "procedural",
-    "art",
-    "perlin",
-    "noise",
-    "generated",
-    "computer"
-  ],
-  "author": "Bhupendra Bhudia",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/bhudiaxyz/procedural-art/issues"
-  },
-  "homepage": "https://github.com/bhudiaxyz/procedural-art",
   "dependencies": {
-    "alea": "0.0.9",
+    "alea": "^1.0.0",
     "babel-plugin-transform-async-to-generator": "^6.24.1",
     "babelify": "^7.3.0",
     "bootstrap": "^4.0.0",
     "bootstrap-sass": "^3.3.7",
-    "budo": "^9.4.7",
+    "budo": "^11.6.3",
     "filesaver.js": "^0.2.0",
     "font-awesome": "^4.7.0",
+    "graceful-fs": "^4.2.3",
     "jquery": "^3.3.1",
     "popper.js": "^1.13.0",
     "sass-lint": "^1.12.1",
     "simple-line-icons": "^2.4.1",
-    "simplex-noise": "^2.3.0",
+    "simplex-noise": "^2.4.0",
     "sprintf": "^0.1.5",
-    "worley-noise": "^1.0.1"
+    "worley-noise": "^2.0.1"
   },
   "devDependencies": {
     "browserify": "^15.2.0",
     "chai": "^4.1.2",
+    "del": "^5.1.0",
     "eslint": "^4.15.0",
     "eslint-plugin-mocha": "^4.11.0",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.2",
     "gulp-clean-css": "^3.9.2",
     "gulp-eslint": "^4.0.1",
     "gulp-header": "^2.0.1",
@@ -77,5 +71,13 @@
         }
       ]
     ]
-  }
+  },
+  "keywords": [
+    "procedural",
+    "art",
+    "perlin",
+    "noise",
+    "generated",
+    "computer"
+  ]
 }
