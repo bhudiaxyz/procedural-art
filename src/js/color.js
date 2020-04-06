@@ -1,28 +1,20 @@
-/*!
- * Procedural Art - Procedurally generated art (procedural-art v1.0.0 - https://github.com/bhudiaxyz/procedural-art)
- *
- * Licensed under MIT (https://github.com/bhudiaxyz/procedural-art/blob/master/LICENSE)
- *
- * Based on works of: https://github.com/alan-luo/planetprocedural and https://github.com/marian42/proceduralart
- */
-
 var Color = {};
 
-(function () {
-  "use strict";
+(function() {
+  'use strict';
 
   Color = {
 
-    toHslString: function (color) {
-      return "hsl(" + (color.h % 1.0) * 360 + ", " + (color.s % 1.0) * 100 + "%, " + (color.l % 1.0) * 100 + "%)";
+    toHslString: function(color) {
+      return 'hsl(' + (color.h % 1.0) * 360 + ', ' + (color.s % 1.0) * 100 + '%, ' + (color.l % 1.0) * 100 + '%)';
     },
 
-    toRgbString: function (color) {
-      return "rgb(" + color.r * 255 + "," + color.g * 255 + "," + color.b * 255 + ")";
+    toRgbString: function(color) {
+      return 'rgb(' + color.r * 255 + ',' + color.g * 255 + ',' + color.b * 255 + ')';
     },
 
-    toRgbaString: function (color) {
-      return "rgb(" + color.r * 255 + "," + color.g * 255 + "," + color.b * 255 + "," + color.a + ")";
+    toRgbaString: function(color) {
+      return 'rgb(' + color.r * 255 + ',' + color.g * 255 + ',' + color.b * 255 + ',' + color.a + ')';
     },
 
     // http://stackoverflow.com/a/17243070/895589
@@ -31,11 +23,11 @@ var Color = {};
      * OR
      * h, s, v
      */
-    getRGB: function (h, s, v) {
+    getRGB: function(h, s, v) {
       while (h > 1) h -= 1;
       while (h < 0) h += 1;
 
-      var r, g, b, i, f, p, q, t;
+      var r; var g; var b; var i; var f; var p; var q; var t;
       if (h && s === undefined && v === undefined) {
         s = h.s, v = h.v, h = h.h;
       }
@@ -45,24 +37,24 @@ var Color = {};
       q = v * (1 - f * s);
       t = v * (1 - (1 - f) * s);
       switch (i % 6) {
-        case 0:
-          r = v, g = t, b = p;
-          break;
-        case 1:
-          r = q, g = v, b = p;
-          break;
-        case 2:
-          r = p, g = v, b = t;
-          break;
-        case 3:
-          r = p, g = q, b = v;
-          break;
-        case 4:
-          r = t, g = p, b = v;
-          break;
-        case 5:
-          r = v, g = p, b = q;
-          break;
+      case 0:
+        r = v, g = t, b = p;
+        break;
+      case 1:
+        r = q, g = v, b = p;
+        break;
+      case 2:
+        r = p, g = v, b = t;
+        break;
+      case 3:
+        r = p, g = q, b = v;
+        break;
+      case 4:
+        r = t, g = p, b = v;
+        break;
+      case 5:
+        r = v, g = p, b = q;
+        break;
       }
       return {
         r: Math.floor(r * 255),
@@ -71,17 +63,14 @@ var Color = {};
       };
     },
 
-    getColorString: function (color, alpha) {
-      if (alpha === undefined)
-        alpha = 1;
+    getColorString: function(color, alpha) {
+      if (alpha === undefined) {alpha = 1;}
       return 'rgba(' + color.r + ', ' + color.g + ', ' + color.b + ', ' + alpha + ')';
     },
 
-    hslToColor: function (string) {
+    hslToColor: function(string) {
     }
   }; // Color
 
-  if (typeof module !== "undefined")
-    module.exports = Color;
-
+  if (typeof module !== 'undefined') {module.exports = Color;}
 })();

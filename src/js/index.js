@@ -1,10 +1,5 @@
-/*!
- * Procedural Art - Procedurally generated art (procedural-art v1.0.0 - https://github.com/bhudiaxyz/procedural-art)
- *
- * Licensed under MIT (https://github.com/bhudiaxyz/procedural-art/blob/master/LICENSE)
- *
- * Based on works of: https://github.com/alan-luo/planetprocedural and https://github.com/marian42/proceduralart
- */
+import 'bootstrap';
+import '../scss/index.scss';
 
 const Color = require('./color.js');
 const Draw = require('./draw.js');
@@ -285,13 +280,14 @@ function makeRiver(params) {
     var slope = 1 - (5 - r) * 0.2;
 
     var points = [];
+    var d
     for (var i = 0; i < canvas.height; i++) { //go along one edge
-      del = Math.abs(position.y - i);
-      points.push({x: 10 * simplex.noise2D(100, i / 30) + position.x + halfwidth + del * slope, y: i});
+      d = Math.abs(position.y - i);
+      points.push({x: 10 * simplex.noise2D(100, i / 30) + position.x + halfwidth + d * slope, y: i});
     }
     for (var i = canvas.height - 1; i >= 0; i--) { //go along the other edge
-      del = Math.abs(position.y - i);
-      points.push({x: 10 * simplex.noise2D(200, i / 30) + position.x - halfwidth - del * slope, y: i});
+      d = Math.abs(position.y - i);
+      points.push({x: 10 * simplex.noise2D(200, i / 30) + position.x - halfwidth - d * slope, y: i});
     }
 
     ctx.fillStyle = colorStr;
@@ -473,7 +469,7 @@ function makeMountains() {
   var sstep = 0.03, lstep = 0.02;
   var tallRange = 150, lowerRange = 100;
   make1DNoise(430, tallRange, 0.005, {noiseFunction: scene.mountainNoise, fillColor: Color.toHslString(scene.colors.mountains), zaxis: 0});
-  mountainShade = {h: scene.colors.mountains.h, s: scene.colors.mountains.s - sstep, l: scene.colors.mountains.l - lstep};
+  var mountainShade = {h: scene.colors.mountains.h, s: scene.colors.mountains.s - sstep, l: scene.colors.mountains.l - lstep};
   for (var i = 0; i < 3; i++) {
     make1DNoise(430, tallRange + i * 35, 0.005, {noiseFunction: scene.mountainNoise, fillColor: Color.toHslString(mountainShade), zaxis: 0.05 * i});
     mountainShade.s += sstep + random() * lstep;

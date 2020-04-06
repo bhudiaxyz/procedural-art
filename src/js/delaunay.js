@@ -1,24 +1,16 @@
-/*!
- * Procedural Art - Procedurally generated art (procedural-art v1.0.0 - https://github.com/bhudiaxyz/procedural-art)
- *
- * Licensed under MIT (https://github.com/bhudiaxyz/procedural-art/blob/master/LICENSE)
- *
- * Based on works of: https://github.com/alan-luo/planetprocedural and https://github.com/marian42/proceduralart
- */
-
 var Delaunay = {};
 
-(function () {
-  "use strict";
+(function() {
+  'use strict';
 
   var EPSILON = 1.0 / 1048576.0;
 
   function supertriangle(vertices) {
-    var xmin = Number.POSITIVE_INFINITY,
-      ymin = Number.POSITIVE_INFINITY,
-      xmax = Number.NEGATIVE_INFINITY,
-      ymax = Number.NEGATIVE_INFINITY,
-      i, dx, dy, dmax, xmid, ymid;
+    var xmin = Number.POSITIVE_INFINITY;
+    var ymin = Number.POSITIVE_INFINITY;
+    var xmax = Number.NEGATIVE_INFINITY;
+    var ymax = Number.NEGATIVE_INFINITY;
+    var i; var dx; var dy; var dmax; var xmid; var ymid;
 
     for (i = vertices.length; i--;) {
       if (vertices[i][0] < xmin) xmin = vertices[i][0];
@@ -41,19 +33,18 @@ var Delaunay = {};
   }
 
   function circumcircle(vertices, i, j, k) {
-    var x1 = vertices[i][0],
-      y1 = vertices[i][1],
-      x2 = vertices[j][0],
-      y2 = vertices[j][1],
-      x3 = vertices[k][0],
-      y3 = vertices[k][1],
-      fabsy1y2 = Math.abs(y1 - y2),
-      fabsy2y3 = Math.abs(y2 - y3),
-      xc, yc, m1, m2, mx1, mx2, my1, my2, dx, dy;
+    var x1 = vertices[i][0];
+    var y1 = vertices[i][1];
+    var x2 = vertices[j][0];
+    var y2 = vertices[j][1];
+    var x3 = vertices[k][0];
+    var y3 = vertices[k][1];
+    var fabsy1y2 = Math.abs(y1 - y2);
+    var fabsy2y3 = Math.abs(y2 - y3);
+    var xc; var yc; var m1; var m2; var mx1; var mx2; var my1; var my2; var dx; var dy;
 
     /* Check for coincident points */
-    if (fabsy1y2 < EPSILON && fabsy2y3 < EPSILON)
-      throw new Error("Eek! Coincident points!");
+    if (fabsy1y2 < EPSILON && fabsy2y3 < EPSILON) {throw new Error('Eek! Coincident points!');}
 
     if (fabsy1y2 < EPSILON) {
       m2 = -((x3 - x2) / (y3 - y2));
@@ -86,7 +77,7 @@ var Delaunay = {};
   }
 
   function dedup(edges) {
-    var i, j, a, b, m, n;
+    var i; var j; var a; var b; var m; var n;
 
     for (j = edges.length; j;) {
       b = edges[--j];
@@ -106,31 +97,29 @@ var Delaunay = {};
   }
 
   Delaunay = {
-    triangulate: function (vertices, key) {
-      var n = vertices.length,
-        i, j, indices, st, open, closed, edges, dx, dy, a, b, c;
+    triangulate: function(vertices, key) {
+      var n = vertices.length;
+      var i; var j; var indices; var st; var open; var closed; var edges; var dx; var dy; var a; var b; var c;
 
       /* Bail if there aren't enough vertices to form any triangles. */
-      if (n < 3)
-        return [];
+      if (n < 3) {return [];}
 
       /* Slice out the actual vertices from the passed objects. (Duplicate the
        * array even if we don't, though, since we need to make a supertriangle
        * later on!) */
       vertices = vertices.slice(0);
 
-      if (key)
-        for (i = n; i--;)
-          vertices[i] = vertices[i][key];
+      if (key) {
+        for (i = n; i--;) {vertices[i] = vertices[i][key];}
+      }
 
       /* Make an array of indices into the vertex array, sorted by the
        * vertices' x-position. */
       indices = new Array(n);
 
-      for (i = n; i--;)
-        indices[i] = i;
+      for (i = n; i--;) {indices[i] = i;}
 
-      indices.sort(function (i, j) {
+      indices.sort(function(i, j) {
         return vertices[j][0] - vertices[i][0];
       });
 
@@ -167,8 +156,7 @@ var Delaunay = {};
 
           /* If we're outside the circumcircle, skip this triangle. */
           dy = vertices[c][1] - open[j].y;
-          if (dx * dx + dy * dy - open[j].r > EPSILON)
-            continue;
+          if (dx * dx + dy * dy - open[j].r > EPSILON) {continue;}
 
           /* Remove the triangle and add it's edges to the edge list. */
           edges.push(
@@ -193,48 +181,42 @@ var Delaunay = {};
       /* Copy any remaining open triangles to the closed list, and then
        * remove any triangles that share a vertex with the supertriangle,
        * building a list of triplets that represent triangles. */
-      for (i = open.length; i--;)
-        closed.push(open[i]);
+      for (i = open.length; i--;) {closed.push(open[i]);}
       open.length = 0;
 
-      for (i = closed.length; i--;)
-        if (closed[i].i < n && closed[i].j < n && closed[i].k < n)
-          open.push(closed[i].i, closed[i].j, closed[i].k);
+      for (i = closed.length; i--;) {
+        if (closed[i].i < n && closed[i].j < n && closed[i].k < n) {open.push(closed[i].i, closed[i].j, closed[i].k);}
+      }
 
       /* Yay, we're done! */
       return open;
     },
 
-    contains: function (tri, p) {
+    contains: function(tri, p) {
       /* Bounding box test first, for quick rejections. */
       if ((p[0] < tri[0][0] && p[0] < tri[1][0] && p[0] < tri[2][0]) ||
         (p[0] > tri[0][0] && p[0] > tri[1][0] && p[0] > tri[2][0]) ||
         (p[1] < tri[0][1] && p[1] < tri[1][1] && p[1] < tri[2][1]) ||
-        (p[1] > tri[0][1] && p[1] > tri[1][1] && p[1] > tri[2][1]))
-        return null;
+        (p[1] > tri[0][1] && p[1] > tri[1][1] && p[1] > tri[2][1])) {return null;}
 
-      var a = tri[1][0] - tri[0][0],
-        b = tri[2][0] - tri[0][0],
-        c = tri[1][1] - tri[0][1],
-        d = tri[2][1] - tri[0][1],
-        i = a * d - b * c;
+      var a = tri[1][0] - tri[0][0];
+      var b = tri[2][0] - tri[0][0];
+      var c = tri[1][1] - tri[0][1];
+      var d = tri[2][1] - tri[0][1];
+      var i = a * d - b * c;
 
       /* Degenerate tri. */
-      if (i === 0.0)
-        return null;
+      if (i === 0.0) {return null;}
 
-      var u = (d * (p[0] - tri[0][0]) - b * (p[1] - tri[0][1])) / i,
-        v = (a * (p[1] - tri[0][1]) - c * (p[0] - tri[0][0])) / i;
+      var u = (d * (p[0] - tri[0][0]) - b * (p[1] - tri[0][1])) / i;
+      var v = (a * (p[1] - tri[0][1]) - c * (p[0] - tri[0][0])) / i;
 
       /* If we're outside the tri, fail. */
-      if (u < 0.0 || v < 0.0 || (u + v) > 1.0)
-        return null;
+      if (u < 0.0 || v < 0.0 || (u + v) > 1.0) {return null;}
 
       return [u, v];
     }
   }; // Delaunay
 
-  if (typeof module !== "undefined")
-    module.exports = Delaunay;
-
+  if (typeof module !== 'undefined') {module.exports = Delaunay;}
 })();
