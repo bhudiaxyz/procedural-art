@@ -62,9 +62,10 @@ function rollingMountainNoise(x, z) {
 
 function mountainNoise(x, z) {
   return simplex.noise2D(z, x) +
-    0.5 * simplex.noise2D(0, 2 * x) +
-    0.25 * simplex.noise2D(0, 4 * x) +
-    0.125 * simplex.noise2D(0, 8 * x);
+    0.5 * simplex.noise2D(z, 2 * x) +
+    0.25 * simplex.noise2D(z, 4 * x) +
+    0.125 * simplex.noise2D(z, 8 * x) +
+    0.0625 * simplex.noise2D(z, 16 * x);
 }
 
 // 1 octave
@@ -199,15 +200,15 @@ if (scene.time === "night") {
 
 // ---------- Scene functions ------------
 
-function make1DNoise(axis, amplitude, scale, params) { //scale normalized at 0.01, amp at 100
+function make1DNoise(axis, amplitude, scale, opts) { //scale normalized at 0.01, amp at 100
   var newNoise = [];
 
   for (var i = 0; i < canvas.width; i++) {
-    newNoise.push({x: i, y: axis + amplitude * params.noiseFunction(scale * i, params.zaxis)});
+    newNoise.push({x: i, y: axis + amplitude * opts.noiseFunction(scale * i, opts.zaxis)});
   }
 
   // Find minimum
-  if (params.keepmax) {
+  if (opts.keepmax) {
     var maxValue = -9999999;
     for (var i = 0; i < canvas.width; i++) {
       if (newNoise[i].y > maxValue) {
@@ -216,31 +217,31 @@ function make1DNoise(axis, amplitude, scale, params) { //scale normalized at 0.0
       }
     }
   }
-  if (params.storepoints)
+  if (opts.storepoints)
     scene.points = Util.copy(newNoise);
 
   newNoise.push(LOWER_LEFT);
   newNoise.push(LOWER_RIGHT);
-  ctx.fillStyle = params.fillColor;
+  ctx.fillStyle = opts.fillColor;
   Draw.fillPath(ctx, newNoise);
 
-  if (params.clip)
+  if (opts.clip)
     ctx.clip();
 }
 
-function makeStars(starcount, params) {
+function makeStars(starcount, opts) {
   ctx.fillStyle = "#FFFFFF";
   for (var i = 0; i < starcount; i++) { //making 300 stars
     var starx = random() * canvas.width;
     var stary = random() * canvas.height;
 
     if (stary < 200) { //near the top
-      if (random() < params.largenessFactor) {
+      if (random() < opts.largenessFactor) {
         //make a big star (20% chance)
         ctx.beginPath();
 
         // Randomize width by variance%
-        var starwidth = params.width + Math.floor(random() * (params.width * params.variance));
+        var starwidth = opts.width + Math.floor(random() * (opts.width * opts.variance));
         ctx.rect(starx - 1, stary - starwidth, 2, 2 * starwidth);
         ctx.rect(starx - starwidth, stary - 1, 2 * starwidth, 2);
 
@@ -265,16 +266,16 @@ function makeStars(starcount, params) {
   }
 }
 
-function makeRiver(params) {
+function makeRiver(opts) {
   if (!scene.enabled.river)
     return;
 
   var position = scene.maxValue;
   for (var r = 5; r > 0; r--) {
     var colorStr = Color.toHslString({
-      h: scene.colors.river.h + random() * 0.05 - params.variance / 2,
-      s: scene.colors.river.s + random() * 0.1 - params.variance,
-      l: scene.colors.river.l + random() * 0.1 - params.variance
+      h: scene.colors.river.h + random() * 0.05 - opts.variance / 2,
+      s: scene.colors.river.s + random() * 0.1 - opts.variance,
+      l: scene.colors.river.l + random() * 0.1 - opts.variance
     });
     var halfwidth = r * 10;
     var slope = 1 - (5 - r) * 0.2;
@@ -295,10 +296,10 @@ function makeRiver(params) {
   }
 }
 
-function makeSun(position, params) {
+function makeSun(position, opts) {
   // Randomize radius by variance%
-  var outerRadius = params.outerRadius + Math.floor(random() * (params.outerRadius * params.variance));
-  var innerRadius = params.innerRadius + Math.floor(random() * (params.innerRadius * params.variance));
+  var outerRadius = opts.outerRadius + Math.floor(random() * (opts.outerRadius * opts.variance));
+  var innerRadius = opts.innerRadius + Math.floor(random() * (opts.innerRadius * opts.variance));
   var radiusRange = outerRadius - innerRadius;
 
   ctx.beginPath();
@@ -325,9 +326,9 @@ function makeSun(position, params) {
   ctx.globalAlpha = 1.0;
 }
 
-function makePlanet(position, params) {
+function makePlanet(position, opts) {
   // Randomize radius by variance%
-  var radius = params.radius + Math.floor(random() * (params.radius * params.variance));
+  var radius = opts.radius + Math.floor(random() * (opts.radius * opts.variance));
   ctx.beginPath();
   ctx.arc(position.x, position.y, radius, 0, 2 * Math.PI);
   ctx.fillStyle = Color.toHslString(scene.colors.planet);
@@ -363,7 +364,7 @@ function makePlanet(position, params) {
   ctx.restore();
 }
 
-function makeClouds(params) {
+function makeClouds(opts) {
   if (!scene.enabled.clouds)
     return;
 
@@ -372,10 +373,10 @@ function makeClouds(params) {
   ctx.beginPath();
   for (var i = 0; i < canvas.width; i++) {
     for (var j = 0; j < canvas.height; j++) {
-      var noiseValue = simplex.noise2D(i * 0.002 + params.offset, j * 0.01 + params.offset);
-      if (noiseValue > params.threshold + random() * params.variance) {
+      var noiseValue = simplex.noise2D(i * 0.002 + opts.offset, j * 0.01 + opts.offset);
+      if (noiseValue > opts.threshold + random() * opts.variance) {
         Draw.drawPixel(ctx, {x: i, y: j}, colorStr);
-        if (random() > params.fluffyFactor) {
+        if (random() > opts.fluffyFactor) {
           ctx.beginPath();
           ctx.arc(i, j, 5, 0, 2 * Math.PI);
           ctx.fill();
@@ -387,7 +388,7 @@ function makeClouds(params) {
   ctx.globalAlpha = 1.0;
 }
 
-function makeSunPlanets(params) {
+function makeSunPlanets(opts) {
   if (!scene.enabled.stars)
     return;
 
@@ -395,15 +396,15 @@ function makeSunPlanets(params) {
     makeStars(300, {width: 3, variance: 2.2, largenessFactor: 0.2});
 
     if (scene.enabled.planet) {
-      makePlanet({x: 100 + random() * (canvas.width - 200), y: 130}, {radius: params.planetRadius, variance: 0.1});
-      makePlanet({x: 80 + random() * (canvas.width - 300), y: 50 + random() * (canvas.height - 300)}, {radius: params.planetRadius / 3, variance: 0.15});
+      makePlanet({x: 100 + random() * (canvas.width - 200), y: 130}, {radius: opts.planetRadius, variance: 0.1});
+      makePlanet({x: 80 + random() * (canvas.width - 300), y: 50 + random() * (canvas.height - 300)}, {radius: opts.planetRadius / 3, variance: 0.15});
     }
 
   } else {
-    makeSun({x: 100 + random() * (canvas.width - 200), y: 100}, {innerRadius: params.sunRadius / 3 * 2, outerRadius: params.sunRadius + 15, variance: 0.15});
+    makeSun({x: 100 + random() * (canvas.width - 200), y: 100}, {innerRadius: opts.sunRadius / 3 * 2, outerRadius: opts.sunRadius + 15, variance: 0.15});
 
     if (random() > 0.5) {
-      makePlanet({x: 80 + random() * (canvas.width - 300), y: 50 + random() * (canvas.height - 300)}, {radius: params.planetRadius / 4, variance: 0.15});
+      makePlanet({x: 80 + random() * (canvas.width - 300), y: 50 + random() * (canvas.height - 300)}, {radius: opts.planetRadius / 4, variance: 0.15});
     }
   }
 }
@@ -466,8 +467,9 @@ function makeMountains() {
   if (!scene.enabled.mountains)
     return;
 
-  var sstep = 0.03, lstep = 0.02;
-  var tallRange = 150, lowerRange = 100;
+  var sstep = 0.03 + random() * 0.005, lstep = 0.02 + random() * 0.005;
+  var tallRange = 150 + random() * 15, lowerRange = 100 + random() * 20;
+
   make1DNoise(430, tallRange, 0.005, {noiseFunction: scene.mountainNoise, fillColor: Color.toHslString(scene.colors.mountains), zaxis: 0});
   var mountainShade = {h: scene.colors.mountains.h, s: scene.colors.mountains.s - sstep, l: scene.colors.mountains.l - lstep};
   for (var i = 0; i < 3; i++) {
@@ -478,7 +480,7 @@ function makeMountains() {
 
   make1DNoise(430, lowerRange, 0.0045, {noiseFunction: scene.mountainNoise, fillColor: Color.toHslString(scene.colors.mountains), zaxis: 0});
   mountainShade = {h: scene.colors.mountains.h, s: scene.colors.mountains.s - sstep, l: scene.colors.mountains.l - lstep};
-  for (var i = 0; i < 3; i++) {
+  for (var i = 0; i < 4; i++) {
     make1DNoise(430, lowerRange - i * 25, 0.0045, {noiseFunction: scene.mountainNoise, fillColor: Color.toHslString(mountainShade), zaxis: 0.04 * i});
     mountainShade.s -= sstep - random() * lstep;
     mountainShade.l += lstep + random() * sstep;
@@ -546,11 +548,10 @@ function makeTrees() {
     var treey = random() * canvas.height;
 
     // make trees rooted from below hills, above bottom, and not w/in 150 pixels of river
-    // this cannot possibly be efficient but idk how else to do it. maybe cache each shape as an object so points can be picked from within the region?
     if ((treex < scene.maxValue.x - 150 || treex > scene.maxValue.x + 150) && treey > scene.points[Math.floor(treex)].y) {
 
-      var treeWidth = Math.floor(3 + 2.5 * random());
-      var treeHeight = (6 + 3.1 * random()) * treeWidth;
+      var treeWidth = Math.floor(3 + 3.15 * random());
+      var treeHeight = (6 + 6.14 * random()) * treeWidth;
 
       // Draw a tree at treex, treey
       ctx.fillStyle = treeColorStr;
@@ -606,28 +607,3 @@ makeMountains();
 makeHills();
 makeRiver({variance: 0.06});
 makeTrees();
-
-// function getMousePos(canvas, evt) {
-//   var rect = canvas.getBoundingClientRect();
-//   return {x: evt.clientX - rect.left, y: evt.clientY - rect.top};
-// }
-//
-// function doMouseMove(evt) {
-//   var mousePos = getMousePos(canvas, evt);
-//   var showBox = false;
-//   for (var i = 0; i < scene.clickBoxes.length; i++) {
-//     if (mousePos.x > scene.clickBoxes[i].left && mousePos.x < scene.clickBoxes[i].right &&
-//       mousePos.y > scene.clickBoxes[i].top && mousePos.y < scene.clickBoxes[i].bottom) {
-//       scene.clickBoxes[i].action(i);
-//       showBox = true;
-//     }
-//   }
-//
-//   if (showBox) {
-//     document.querySelector('#canvas2').classList.remove('hidden');
-//   } else {
-//     document.querySelector('#canvas2').classList.add('hidden');
-//   }
-// }
-//
-// canvas.addEventListener('mousemove', doMouseMove, false);

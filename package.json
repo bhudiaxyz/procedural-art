@@ -29,6 +29,7 @@
     "font-awesome": "^4.7.0",
     "graceful-fs": "^4.2.3",
     "jquery": "^3.4.1",
+    "nice-color-palettes": "^2.0.0",
     "popper.js": "^1.15.0",
     "simple-line-icons": "^2.4.1",
     "simplex-noise": "^2.4.0",
