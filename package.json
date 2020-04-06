@@ -1,8 +1,10 @@
 {
   "name": "procedural-art",
+  "version": "1.0.0",
+  "title": "Procedural Art",
   "description": "Procedurally generated art",
-  "license": "MIT",
   "author": "Bhupendra Bhudia",
+  "license": "MIT",
   "homepage": "https://github.com/bhudiaxyz/procedural-art",
   "repository": {
     "type": "git",
@@ -11,7 +13,6 @@
   "bugs": {
     "url": "https://github.com/bhudiaxyz/procedural-art/issues"
   },
-  "version": "1.0.0",
   "scripts": {
     "build": "webpack -p --progress --mode production --config webpack.config.js",
     "predeploy": "npm run build",
@@ -103,6 +104,5 @@
       "eslint --fix",
       "git add"
     ]
-  },
-  "title": "Procedural Art"
+  }
 }

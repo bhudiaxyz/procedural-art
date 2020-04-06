@@ -1,9 +1,11 @@
-# NodeJS
+# Node.js related files
 node_modules/
-bower_components/
+dist/
 
-# Junk
-yarn.lock
+# OS generated files
+.DS_Store
+.Trashes
+Thumbs.db
 *.log
 
 # editor
@@ -15,11 +17,12 @@ yarn.lock
 target/
 out/
 build/
-dist/
-
-# OSX
-.DS_Store
 
 # linters
 .eslintrc.json
 .sass-lint.yml
+
+# Build
+output/*.png
+output/*.jpg
+video/
