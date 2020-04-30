@@ -1,14 +1,21 @@
 import 'bootstrap';
 import '../scss/index.scss';
 
+var Alea = require('alea');
+var SimplexNoise = require('simplex-noise');
+
+// Grab some nice color palettes
+const palettes = require('nice-color-palettes');
+
 const Color = require('./color.js');
 const Draw = require('./draw.js');
 const Delaunay = require('./delaunay.js');
 const Util = require('./util.js');
-var Alea = require('alea');
-var SimplexNoise = require('simplex-noise');
 
 // ------ Setup some basic stuff ---------
+
+var random = new Alea();
+var simplex = new SimplexNoise(random); // noise is from -1.0 to 1.0
 
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
@@ -17,24 +24,22 @@ ctx.webkitImageSmoothingEnabled = true;
 ctx.imageSmoothingEnabled = true;
 ctx.strokeStyle = "#000000";
 
-// var canvas2 = document.getElementById("canvas2");
-// var ctx2 = canvas2.getContext('2d');
-// ctx2.save();
-// ctx2.webkitImageSmoothingEnabled = true;
-// ctx2.imageSmoothingEnabled = true;
+var canvas2 = document.getElementById("canvas2");
+var ctx2 = canvas2.getContext('2d');
+ctx2.webkitImageSmoothingEnabled = true;
+ctx2.imageSmoothingEnabled = true;
 
 var LOWER_LEFT = {x: canvas.width, y: canvas.height};
 var LOWER_RIGHT = {x: 0, y: canvas.height};
 var UPPER_LEFT = {x: canvas.width, y: 0};
 var UPPER_RIGHT = {x: 0, y: 0};
 
-var random = new Alea();
-var simplex = new SimplexNoise(random); // noise is from -1.0 to 1.0
-
 // ---------- Useful helper tools ------------
 
 function randomColor(brightness) {
   var randH, randS, randL;
+  var palette = palettes[Math.floor(random() * palettes.length)].slice();
+
   if (brightness === "dark") {
     randH = random();
     randS = random() * 0.4 + 0.3;
